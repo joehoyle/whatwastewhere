@@ -26,7 +26,6 @@
 						var itemHolder = jQuery( '#items').html('');
 
 						jQuery( items ).each( function( key, item ) {
-							console.log( item.name );
 							var li = jQuery( '#template-item' ).clone().attr('id', '');
 							li.find( '.name' ).html( item.name );
 							li.find( '.container' ).html( item.container );
