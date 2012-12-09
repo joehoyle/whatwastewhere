@@ -22,7 +22,7 @@
 			jQuery( document ).ready( function() {
 				jQuery( '#search' ).keyup( function() {
 				
-					jQuery.getJSON( 'http://127.0.0.1:3000/items?callback=?', { q: jQuery( this ).val() }, function( items ) {
+					jQuery.getJSON( 'http://labs.hmn.md:3000/items?callback=?', { q: jQuery( this ).val() }, function( items ) {
 						var itemHolder = jQuery( '#items').html('');
 
 						jQuery( items ).each( function( key, item ) {
