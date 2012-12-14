@@ -48,7 +48,7 @@
 
 				jQuery( 'a.request-new-item' ).live( 'click', function( e ) {
 					e.preventDefault();
-					jQuery.getJSON( 'http://localhost:3000/item?item=' + jQuery( this ).attr( 'data-item' ) + '&callback=?', function( data ) { 
+					jQuery.getJSON( 'http://labs.hmn.md:3000/item?item=' + jQuery( this ).attr( 'data-item' ) + '&callback=?', function( data ) { 
 						if ( data )
 							alert( 'Added item, someone will review it within the next 3 days' );
 						else
