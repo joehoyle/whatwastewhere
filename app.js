@@ -21,4 +21,14 @@ app.get('/items', function(req, res){
   res.jsonp( newItems );
 });
 
+app.get( '/item', function( req, res ) {
+	waste.addItem( req.query.item, function( status ) {
+
+		if ( status === 'success')
+			res.jsonp( true ); 
+		else
+			res.jsonp( false ); 
+	} );
+});
+
 app.listen(3000);

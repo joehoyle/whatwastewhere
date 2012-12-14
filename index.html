@@ -28,16 +28,33 @@
 					if ( searchReq )
 						searchReq.abort();
 					
-					searchReq = jQuery.getJSON( 'http://labs.hmn.md:3000/items?callback=?', { q: jQuery( this ).val() }, function( items ) {
+					var itemName = jQuery( this ).val();
+					console.log( itemName);
+					searchReq = jQuery.getJSON( 'http://labs.hmn.md:3000/items?callback=?', { q: itemName }, function( items ) {
 						var itemHolder = jQuery( '#items').html('');
 
-						jQuery( items ).each( function( key, item ) {
-							var li = jQuery( '#template-item' ).clone().attr('id', '');
-							li.find( '.name' ).html( item.name );
-							li.find( '.container' ).html( item.container );
-							itemHolder.append( li );
-						} );
+						if ( items.length > 0 ) {
+							jQuery( items ).each( function( key, item ) {
+								var li = jQuery( '#template-item' ).clone().attr('id', '');
+								li.find( '.name' ).html( item.name );
+								li.find( '.container' ).html( item.container );
+								itemHolder.append( li );
+							} );
+						} else if ( itemName !== '' ) {
+							itemHolder.append( '<li>Not found, <a href="#" class="request-new-item" data-item="' + itemName +'">Add Item</li>' );
+						}
 					} );
+				});
+
+				jQuery( 'a.request-new-item' ).live( 'click', function( e ) {
+					e.preventDefault();
+					jQuery.getJSON( 'http://localhost:3000/item?item=' + jQuery( this ).attr( 'data-item' ) + '&callback=?', function( data ) { 
+						if ( data )
+							alert( 'Added item, someone will review it within the next 3 days' );
+						else
+							alert( 'Something went rong, shucks!' );
+					} );
+					
 				});
 			} );
 		</script>

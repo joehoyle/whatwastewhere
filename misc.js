@@ -1,6 +1,8 @@
 var http 	= require('http');
 var cheerio = require('cheerio');
 var async 	= require('async');
+var qs 		= require('qs');
+var needle	= require('needle');
 
 module.exports = {
 	getHTML: function( url, callback ) {
@@ -27,6 +29,26 @@ module.exports = {
 			} );
 
 		} );
+
+	},
+	addItem: function( item, callback ) {
+		
+		var data = { form: { item: 'Plastic Coat Hanger', Submit: 'Submit', formId: '28' } };
+		//var options = {};
+
+		needle.post('http://www.derbyshiredales.gov.uk/a-z-guide-on-waste-new-item', data, function(err, resp, body){
+  			// you can pass params as a string or as an object
+  			
+  			var options = { headers: { Cookie: resp.headers['set-cookie'][0].split(';')[0] } };
+
+  			needle.post('http://www.derbyshiredales.gov.uk/a-z-guide-on-waste-new-item', data, options, function(err, resp, body){
+
+				if ( body.match( 'Thank you, your submission has been recorded') )
+					callback( 'success' );
+				else
+					callback( 'error' );
+			} );
+		});
 
 	}
 }
